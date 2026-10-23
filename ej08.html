@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8 - Carrusel de videojuegos</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fondo: #0f0b1e;
+            --tarjeta: #1e1834;
+            --morado: #7c3aed;
+            --morado-claro: #a78bfa;
+            --azul: #2563eb;
+            --texto: #f8fafc;
+            --texto-secundario: #c4b5fd;
+            --borde: rgba(167, 139, 250, 0.28);
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(124, 58, 237, 0.2),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(37, 99, 235, 0.17),
+                    transparent 35%
+                ),
+                var(--fondo);
+            color: var(--texto);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .barra-superior {
+            padding: 20px 6%;
+            border-bottom: 1px solid var(--borde);
+            background: rgba(15, 11, 30, 0.9);
+        }
+
+        .volver {
+            color: var(--morado-claro);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .volver:hover {
+            color: white;
+        }
+
+        .contenedor {
+            width: min(1000px, 92%);
+            margin: 0 auto;
+            padding: 42px 0 70px;
+        }
+
+        .encabezado {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .numero {
+            display: inline-block;
+            margin-bottom: 17px;
+            padding: 7px 15px;
+            border: 1px solid var(--morado);
+            border-radius: 999px;
+            background: rgba(124, 58, 237, 0.13);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-bottom: 12px;
+            font-size: clamp(32px, 5vw, 52px);
+        }
+
+        .descripcion {
+            color: var(--texto-secundario);
+            line-height: 1.6;
+        }
+
+        /* CARRUSEL */
+
+        .carrusel {
+            position: relative;
+            max-width: 920px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+            background: var(--tarjeta);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .visor {
+            position: relative;
+            height: 530px;
+            overflow: hidden;
+            background: #080611;
+        }
+
+        .diapositiva {
+            position: absolute;
+            inset: 0;
+            visibility: hidden;
+            opacity: 0;
+            transform: scale(1.04);
+            transition:
+                opacity 0.75s ease,
+                transform 1.2s ease,
+                visibility 0.75s;
+        }
+
+        .diapositiva.activa {
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .diapositiva img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            background: #080611;
+        }
+
+        .diapositiva::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(10, 6, 25, 0.95) 0%,
+                rgba(10, 6, 25, 0.28) 48%,
+                rgba(10, 6, 25, 0.05) 100%
+            );
+        }
+
+        .informacion {
+            position: absolute;
+            z-index: 2;
+            left: 45px;
+            right: 45px;
+            bottom: 38px;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            margin-bottom: 11px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(
+                135deg,
+                var(--morado),
+                var(--azul)
+            );
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .informacion h2 {
+            margin-bottom: 9px;
+            font-size: clamp(25px, 4vw, 40px);
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .informacion p {
+            max-width: 630px;
+            color: #ddd6fe;
+            line-height: 1.6;
+            text-shadow: 0 2px 7px rgba(0, 0, 0, 0.9);
+        }
+
+        /* BOTONES LATERALES */
+
+        .boton-lateral {
+            position: absolute;
+            z-index: 5;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            display: grid;
+            place-items: center;
+            transform: translateY(-50%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            background: rgba(15, 11, 30, 0.75);
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: 0.25s;
+        }
+
+        .boton-lateral:hover {
+            background: var(--morado);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .boton-lateral:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .anterior {
+            left: 20px;
+        }
+
+        .siguiente {
+            right: 20px;
+        }
+
+        /* CONTROLES INFERIORES */
+
+        .controles {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 24px;
+        }
+
+        .contador {
+            min-width: 54px;
+            color: var(--texto-secundario);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .indicadores {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            flex: 1;
+        }
+
+        .indicador {
+            width: 11px;
+            height: 11px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: #55486f;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .indicador:hover {
+            background: var(--morado-claro);
+            transform: scale(1.15);
+        }
+
+        .indicador.activo {
+            width: 31px;
+            border-radius: 999px;
+            background: linear-gradient(
+                90deg,
+                var(--morado),
+                var(--azul)
+            );
+        }
+
+        .pausa {
+            min-width: 125px;
+            padding: 10px 15px;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            background: rgba(124, 58, 237, 0.15);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .pausa:hover {
+            background: var(--morado);
+        }
+
+        .estado {
+            margin-top: 20px;
+            padding: 15px 20px;
+            border: 1px dashed var(--borde);
+            border-radius: 13px;
+            color: var(--texto-secundario);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 700px) {
+            .visor {
+                height: 460px;
+            }
+
+            .informacion {
+                left: 25px;
+                right: 25px;
+                bottom: 28px;
+            }
+
+            .informacion p {
+                font-size: 14px;
+            }
+
+            .boton-lateral {
+                top: 42%;
+                width: 43px;
+                height: 43px;
+            }
+
+            .anterior {
+                left: 10px;
+            }
+
+            .siguiente {
+                right: 10px;
+            }
+
+            .controles {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .indicadores {
+                order: -1;
+                width: 100%;
+                flex-basis: 100%;
+            }
+
+            .contador,
+            .pausa {
+                min-width: 125px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .visor {
+                height: 400px;
+            }
+
+            .informacion h2 {
+                font-size: 25px;
+            }
+
+            .informacion p {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="barra-superior">
+        <a href="../index.html" class="volver">&longleftarrow; Volver al menú principal
+        </a>
+    </div>
+
+    <main class="contenedor">
+
+        <header class="encabezado">
+            <span class="numero">Ejercicio 8</span>
+
+            <h1>Carrusel de videojuegos</h1>
+
+            <p class="descripcion">
+                Una selección de videojuegos que forman parte de mis gustos
+                personales. Las imágenes cambian automáticamente mediante
+                JavaScript.
+            </p>
+        </header>
+
+        <section class="carrusel" id="carrusel">
+
+            <div class="visor">
+
+                <!-- DIAPOSITIVA 1 -->
+
+                <article class="diapositiva activa">
+                    <img
+                        src="imagenes/dead-space.png"
+                        alt="Portada del videojuego Dead Space"
+                        draggable="false"
+                    >
+
+                    <div class="informacion">
+                        <span class="etiqueta">Survival horror</span>
+                        <h2>Dead Space</h2>
+
+                        <p>
+                            Terror, aislamiento y supervivencia en las
+                            profundidades del espacio. Una de mis sagas
+                            favoritas.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- DIAPOSITIVA 2 -->
+
+                <article class="diapositiva">
+                    <img
+                        src="imagenes/kof-xiii.png"
+                        alt="Portada de The King of Fighters XIII"
+                        draggable="false"
+                    >
+
+                    <div class="informacion">
+                        <span class="etiqueta">Lucha</span>
+                        <h2>The King of Fighters XIII</h2>
+
+                        <p>
+                            Combates por equipos, técnica y un apartado
+                            visual que convirtió esta entrega en una de
+                            las más recordadas.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- DIAPOSITIVA 3 -->
+
+                <article class="diapositiva">
+                    <img
+                        src="imagenes/batman-arkham-city.png"
+                        alt="Portada del videojuego Batman Arkham City"
+                        draggable="false"
+                    >
+
+                    <div class="informacion">
+                        <span class="etiqueta">Acción</span>
+                        <h2>Batman: Arkham City</h2>
+
+                        <p>
+                            Una ciudad convertida en prisión y una noche
+                            en la que Batman deberá enfrentarse a sus
+                            mayores enemigos.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- DIAPOSITIVA 4 -->
+
+                <article class="diapositiva">
+                    <img
+                        src="imagenes/devil-may-cry-3.png"
+                        alt="Portada del videojuego Devil May Cry 3"
+                        draggable="false"
+                    >
+
+                    <div class="informacion">
+                        <span class="etiqueta">Hack and slash</span>
+                        <h2>Devil May Cry 3</h2>
+
+                        <p>
+                            Demonios, velocidad, música y combates
+                            cargados de estilo. Dante entra al carrusel
+                            sin pedir permiso.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- DIAPOSITIVA 5 -->
+
+                <article class="diapositiva">
+                    <img
+                        src="imagenes/plants-vs-zombies.png"
+                        alt="Portada de Plants vs. Zombies Replanted"
+                        draggable="false"
+                    >
+
+                    <div class="informacion">
+                        <span class="etiqueta">Estrategia</span>
+                        <h2>Plants vs. Zombies</h2>
+
+                        <p>
+                            Plantas con habilidades, zombis extravagantes
+                            y una defensa de jardín que nunca pasa de moda.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- DIAPOSITIVA 6 -->
+
+                <article class="diapositiva">
+                    <img
+                        src="imagenes/silksong.png"
+                        alt="Portada del videojuego Hollow Knight Silksong"
+                        draggable="false"
+                    >
+
+                    <div class="informacion">
+                        <span class="etiqueta">Metroidvania</span>
+                        <h2>Hollow Knight: Silksong</h2>
+
+                        <p>
+                            Hornet protagoniza una aventura veloz y
+                            desafiante en un reino completamente nuevo.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- BOTONES LATERALES -->
+
+                <button
+                    class="boton-lateral anterior"
+                    id="anterior"
+                    type="button"
+                    aria-label="Mostrar imagen anterior"
+                >
+                    ‹
+                </button>
+
+                <button
+                    class="boton-lateral siguiente"
+                    id="siguiente"
+                    type="button"
+                    aria-label="Mostrar imagen siguiente"
+                >
+                    ›
+                </button>
+
+            </div>
+
+            <!-- CONTROLES INFERIORES -->
+
+            <div class="controles">
+
+                <span class="contador" id="contador">
+                    1 / 6
+                </span>
+
+                <div
+                    class="indicadores"
+                    id="indicadores"
+                    aria-label="Indicadores del carrusel"
+                ></div>
+
+                <button
+                    class="pausa"
+                    id="pausa"
+                    type="button"
+                >
+                    ⏸ Pausar
+                </button>
+
+            </div>
+
+        </section>
+
+        <p class="estado" id="estado">
+            Reproducción automática activa: la imagen cambia cada
+            4 segundos.
+        </p>
+
+    </main>
+
+    <script>
+        const diapositivas = document.querySelectorAll(".diapositiva");
+        const contenedorIndicadores =
+            document.getElementById("indicadores");
+
+        const botonAnterior =
+            document.getElementById("anterior");
+
+        const botonSiguiente =
+            document.getElementById("siguiente");
+
+        const botonPausa =
+            document.getElementById("pausa");
+
+        const contador =
+            document.getElementById("contador");
+
+        const estado =
+            document.getElementById("estado");
+
+        let indiceActual = 0;
+        let intervalo;
+        let estaPausado = false;
+
+        /*
+            CREA AUTOMÁTICAMENTE UN INDICADOR
+            POR CADA IMAGEN DEL CARRUSEL
+        */
+
+        diapositivas.forEach(function (diapositiva, indice) {
+            const indicador = document.createElement("button");
+
+            indicador.classList.add("indicador");
+            indicador.type = "button";
+
+            indicador.setAttribute(
+                "aria-label",
+                "Mostrar imagen " + (indice + 1)
+            );
+
+            if (indice === 0) {
+                indicador.classList.add("activo");
+            }
+
+            indicador.addEventListener("click", function () {
+                mostrarDiapositiva(indice);
+                reiniciarCarrusel();
+            });
+
+            contenedorIndicadores.appendChild(indicador);
+        });
+
+        const indicadores =
+            document.querySelectorAll(".indicador");
+
+        /*
+            MUESTRA LA IMAGEN SELECCIONADA
+        */
+
+        function mostrarDiapositiva(indice) {
+            if (indice >= diapositivas.length) {
+                indiceActual = 0;
+            } else if (indice < 0) {
+                indiceActual = diapositivas.length - 1;
+            } else {
+                indiceActual = indice;
+            }
+
+            diapositivas.forEach(function (diapositiva) {
+                diapositiva.classList.remove("activa");
+            });
+
+            indicadores.forEach(function (indicador) {
+                indicador.classList.remove("activo");
+            });
+
+            diapositivas[indiceActual].classList.add("activa");
+            indicadores[indiceActual].classList.add("activo");
+
+            contador.textContent =
+                (indiceActual + 1) +
+                " / " +
+                diapositivas.length;
+        }
+
+        /*
+            CAMBIO DE IMÁGENES
+        */
+
+        function imagenSiguiente() {
+            mostrarDiapositiva(indiceActual + 1);
+        }
+
+        function imagenAnterior() {
+            mostrarDiapositiva(indiceActual - 1);
+        }
+
+        /*
+            REPRODUCCIÓN AUTOMÁTICA
+        */
+
+        function iniciarCarrusel() {
+            clearInterval(intervalo);
+
+            if (!estaPausado) {
+                intervalo = setInterval(
+                    imagenSiguiente,
+                    4000
+                );
+            }
+        }
+
+        function reiniciarCarrusel() {
+            if (!estaPausado) {
+                iniciarCarrusel();
+            }
+        }
+
+        /*
+            BOTONES LATERALES
+        */
+
+        botonSiguiente.addEventListener("click", function () {
+            imagenSiguiente();
+            reiniciarCarrusel();
+        });
+
+        botonAnterior.addEventListener("click", function () {
+            imagenAnterior();
+            reiniciarCarrusel();
+        });
+
+        /*
+            BOTÓN PAUSAR Y REANUDAR
+        */
+
+        botonPausa.addEventListener("click", function () {
+            estaPausado = !estaPausado;
+
+            if (estaPausado) {
+                clearInterval(intervalo);
+
+                botonPausa.textContent =
+                    "▶ Reanudar";
+
+                estado.textContent =
+                    "Carrusel pausado. Presiona Reanudar para continuar.";
+            } else {
+                botonPausa.textContent =
+                    "⏸ Pausar";
+
+                estado.textContent =
+                    "Reproducción automática activa: la imagen cambia cada 4 segundos.";
+
+                iniciarCarrusel();
+            }
+        });
+
+        /*
+            CONTROL CON LAS FLECHAS DEL TECLADO
+        */
+
+        document.addEventListener("keydown", function (evento) {
+            if (evento.key === "ArrowRight") {
+                imagenSiguiente();
+                reiniciarCarrusel();
+            }
+
+            if (evento.key === "ArrowLeft") {
+                imagenAnterior();
+                reiniciarCarrusel();
+            }
+
+            if (evento.key === " ") {
+                evento.preventDefault();
+                botonPausa.click();
+            }
+        });
+
+        /*
+            DETIENE EL CARRUSEL SI SE CAMBIA
+            A OTRA PESTAÑA DEL NAVEGADOR
+        */
+
+        document.addEventListener(
+            "visibilitychange",
+            function () {
+                if (document.hidden) {
+                    clearInterval(intervalo);
+                } else {
+                    reiniciarCarrusel();
+                }
+            }
+        );
+
+        /*
+            INICIO DEL CARRUSEL
+        */
+
+        mostrarDiapositiva(0);
+        iniciarCarrusel();
+    </script>
+
+</body>
+</html>
