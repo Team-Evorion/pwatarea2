@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 05 - Validación de Formulario</title>
+    <link rel="stylesheet" href="ej05.css">
+    <script src="ej05.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Validación de Formulario</h1>
+        <p class="instrucciones">
+            Completa todos los campos requeridos antes de enviar el registro.
+        </p>
+    </header>
+
+    <main>
+        <section id="contenido" class="tarjeta-contenido" aria-live="polite">
+            <h2 id="titulo-contenido">Registro de Usuario</h2>
+
+            <form id="formulario-registro" novalidate>
+                <div class="grupo-campo">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" placeholder="Ej. Elkin Velastegui">
+                    <small class="error-texto" id="error-nombre"></small>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" placeholder="usuario@correo.edu.ec">
+                    <small class="error-texto" id="error-correo"></small>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Mínimo 6 caracteres">
+                    <small class="error-texto" id="error-password"></small>
+                </div>
+
+                <div id="alerta-general" class="alerta oculto"></div>
+
+                <div class="botones-form">
+                    <button type="submit" id="btn-enviar">Registrar cuenta</button>
+                    <button type="button" id="btn-limpiar" class="btn-secundario">Limpiar campos</button>
+                </div>
+            </form>
+
+            <a href="../index.html" class="enlace-regreso">Volver al menú principal</a>
+        </section>
+    </main>
+</body>
+</html>

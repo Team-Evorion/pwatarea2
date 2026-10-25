@@ -1,0 +1,352 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --fondo: #0f0b1e;
+    --tarjeta: #1e1834;
+    --morado: #7c3aed;
+    --morado-claro: #a78bfa;
+    --azul: #2563eb;
+    --texto: #f8fafc;
+    --texto-secundario: #c4b5fd;
+    --borde: rgba(167, 139, 250, 0.28);
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(124, 58, 237, 0.2),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(37, 99, 235, 0.17),
+            transparent 35%
+        ),
+        var(--fondo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.barra-superior {
+    padding: 20px 6%;
+    border-bottom: 1px solid var(--borde);
+    background: rgba(15, 11, 30, 0.9);
+}
+
+.volver {
+    color: var(--morado-claro);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.volver:hover {
+    color: white;
+}
+
+.contenedor {
+    width: min(1000px, 92%);
+    margin: 0 auto;
+    padding: 42px 0 70px;
+}
+
+.encabezado {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.numero {
+    display: inline-block;
+    margin-bottom: 17px;
+    padding: 7px 15px;
+    border: 1px solid var(--morado);
+    border-radius: 999px;
+    background: rgba(124, 58, 237, 0.13);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+h1 {
+    margin-bottom: 12px;
+    font-size: clamp(32px, 5vw, 52px);
+}
+
+.descripcion {
+    color: var(--texto-secundario);
+    line-height: 1.6;
+}
+
+/* CARRUSEL */
+
+.carrusel {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: 24px;
+    background: var(--tarjeta);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
+.visor {
+    position: relative;
+    height: 530px;
+    overflow: hidden;
+    background: #080611;
+}
+
+.diapositiva {
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(1.04);
+    transition:
+        opacity 0.75s ease,
+        transform 1.2s ease,
+        visibility 0.75s;
+}
+
+.diapositiva.activa {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.diapositiva img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #080611;
+}
+
+.diapositiva::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(10, 6, 25, 0.95) 0%,
+        rgba(10, 6, 25, 0.28) 48%,
+        rgba(10, 6, 25, 0.05) 100%
+    );
+}
+
+.informacion {
+    position: absolute;
+    z-index: 2;
+    left: 45px;
+    right: 45px;
+    bottom: 38px;
+}
+
+.etiqueta {
+    display: inline-block;
+    margin-bottom: 11px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: linear-gradient(
+        135deg,
+        var(--morado),
+        var(--azul)
+    );
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.informacion h2 {
+    margin-bottom: 9px;
+    font-size: clamp(25px, 4vw, 40px);
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+}
+
+.informacion p {
+    max-width: 630px;
+    color: #ddd6fe;
+    line-height: 1.6;
+    text-shadow: 0 2px 7px rgba(0, 0, 0, 0.9);
+}
+
+/* BOTONES LATERALES */
+
+.boton-lateral {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    background: rgba(15, 11, 30, 0.75);
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: 0.25s;
+}
+
+.boton-lateral:hover {
+    background: var(--morado);
+    transform: translateY(-50%) scale(1.08);
+}
+
+.boton-lateral:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.anterior {
+    left: 20px;
+}
+
+.siguiente {
+    right: 20px;
+}
+
+/* CONTROLES INFERIORES */
+
+.controles {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 24px;
+}
+
+.contador {
+    min-width: 54px;
+    color: var(--texto-secundario);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.indicadores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    flex: 1;
+}
+
+.indicador {
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #55486f;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.indicador:hover {
+    background: var(--morado-claro);
+    transform: scale(1.15);
+}
+
+.indicador.activo {
+    width: 31px;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        var(--morado),
+        var(--azul)
+    );
+}
+
+.pausa {
+    min-width: 125px;
+    padding: 10px 15px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: rgba(124, 58, 237, 0.15);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.pausa:hover {
+    background: var(--morado);
+}
+
+.estado {
+    margin-top: 20px;
+    padding: 15px 20px;
+    border: 1px dashed var(--borde);
+    border-radius: 13px;
+    color: var(--texto-secundario);
+    text-align: center;
+    line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+    .visor {
+        height: 460px;
+    }
+
+    .informacion {
+        left: 25px;
+        right: 25px;
+        bottom: 28px;
+    }
+
+    .informacion p {
+        font-size: 14px;
+    }
+
+    .boton-lateral {
+        top: 42%;
+        width: 43px;
+        height: 43px;
+    }
+
+    .anterior {
+        left: 10px;
+    }
+
+    .siguiente {
+        right: 10px;
+    }
+
+    .controles {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .indicadores {
+        order: -1;
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .contador,
+    .pausa {
+        min-width: 125px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 450px) {
+    .visor {
+        height: 400px;
+    }
+
+    .informacion h2 {
+        font-size: 25px;
+    }
+
+    .informacion p {
+        display: none;
+    }
+}
