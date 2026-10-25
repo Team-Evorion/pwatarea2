@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lista de tareas interactiva">
+    <title>Lista de tareas | Programación Web</title>
+    <link rel="stylesheet" href="ej06.css">
+    <script src="ej06.js" defer></script>
+</head>
+<body>
+    <main class="app">
+        <header class="app__header">
+            <span class="eyebrow">PRODUCTIVIDAD PERSONAL</span>
+            <h1>Mi lista de tareas</h1>
+            <p>Organiza tus pendientes, un paso a la vez.</p>
+        </header>
+
+        <section class="panel" aria-labelledby="form-title">
+            <h2 id="form-title" class="visually-hidden">Agregar una tarea</h2>
+            <form id="form-tarea" class="task-form">
+                <label class="visually-hidden" for="entrada-tarea">Nueva tarea</label>
+                <input id="entrada-tarea" name="tarea" type="text"
+                       placeholder="¿Qué necesitas hacer?" maxlength="120"
+                       autocomplete="off" required>
+                <button class="button button--primary" type="submit">
+                    <span aria-hidden="true">＋</span> Agregar tarea
+                </button>
+            </form>
+
+            <div class="list-heading">
+                <h2>Tus pendientes</h2>
+                <span id="contador" class="counter">0 tareas</span>
+            </div>
+
+            <ul id="lista-tareas" class="task-list" aria-live="polite"></ul>
+            <p id="mensaje-vacio" class="empty-state">
+                Todavía no hay tareas. ¡Agrega la primera!
+            </p>
+        </section>
+
+        <footer class="app__footer">
+            <span>Ejercicio 06</span>
+            <span>HTML · CSS · JavaScript</span>
+        </footer>
+    </main>
+</body>
+</html>

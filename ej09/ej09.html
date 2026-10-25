@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Temporizador de cuenta regresiva">
+    <title>Temporizador | Programación Web</title>
+    <link rel="stylesheet" href="ej09.css">
+    <script src="ej09.js" defer></script>
+</head>
+<body>
+    <main class="timer-app">
+        <header class="timer-header">
+            <span class="eyebrow">GESTIÓN DEL TIEMPO</span>
+            <h1>Cuenta regresiva</h1>
+            <p>Define tu tiempo y concéntrate en lo importante.</p>
+        </header>
+
+        <section class="timer-card" aria-labelledby="timer-title">
+            <h2 id="timer-title" class="visually-hidden">Temporizador</h2>
+
+            <label for="duracion">Duración en segundos</label>
+            <div class="duration-control">
+                <input id="duracion" type="number" min="1" max="86400" value="60">
+                <span>segundos</span>
+            </div>
+
+            <div id="reloj" class="clock" role="timer" aria-live="off">01:00</div>
+            <p id="estado" class="status" aria-live="polite">Listo para comenzar</p>
+
+            <div class="timer-actions">
+                <button id="boton-iniciar" class="button button--primary" type="button">Iniciar</button>
+                <button id="boton-pausa" class="button button--secondary" type="button" disabled>Pausar</button>
+                <button id="boton-reiniciar" class="button button--ghost" type="button">Reiniciar</button>
+            </div>
+        </section>
+
+        <footer class="timer-footer">
+            <span>Ejercicio 09</span>
+            <span>HTML · CSS · JavaScript</span>
+        </footer>
+    </main>
+</body>
+</html>
