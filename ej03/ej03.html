@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 03 - Cambio de Imagen</title>
+    <link rel="stylesheet" href="ej03.css">
+    <script src="ej03.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Cambio de imagen interactivo</h1>
+        <p class="instrucciones">
+            Desplaza el ratón sobre la imagen para activar la transición y cambiar la vista.
+        </p>
+    </header>
+
+    <main>
+        <section id="contenido" class="tarjeta-contenido" aria-live="polite">
+            <span id="badge-estado" class="badge">Estado: Imagen Original</span>
+            
+            <div class="marco-imagen">
+                <img id="imagen-interactiva" 
+                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80" 
+                    alt="Hardware de computadora">
+            </div>
+
+            <h2 id="titulo-imagen">Arquitectura de Hardware</h2>
+            <p id="descripcion-imagen">
+                Pasa el cursor sobre la fotografía para visualizar el entorno de desarrollo en acción.
+            </p>
+
+            <div class="estadisticas">
+                <span>Interacciones con el ratón: <strong id="contador-hover">0</strong></span>
+            </div>
+
+            <div class="acciones">
+                <button type="button" id="btn-reiniciar">Restablecer contador</button>
+                <a href="../index.html" class="enlace-regreso">Volver al menú principal</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
