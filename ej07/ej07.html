@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 07 - Menú desplegable</title>
+    <link rel="stylesheet" href="ej07.css">
+    <script src="ej07.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Menú de navegación desplegable</h1>
+
+        <nav>
+            <ul class="menu-principal">
+                <li>
+                    <button type="button" id="btn-productos" aria-expanded="false">Productos</button>
+                    <ul id="submenu-productos" class="submenu">
+                        <li><a href="#">Computadoras</a></li>
+                        <li><a href="#">Teléfonos</a></li>
+                        <li><a href="#">Accesorios</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="button" id="btn-servicios" aria-expanded="false">Servicios</button>
+
+                    <ul id="submenu-servicios" class="submenu">
+                        <li><a href="#">Reparaciones</a></li>
+                        <li><a href="#">Mantenimiento</a></li>
+                        <li><a href="#">Soporte Técnico</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <button type="button" id="btn-nosotros" aria-expanded="false">Nosotros</button>
+
+                    <ul id="submenu-nosotros" class="submenu">
+                        <li><a href="#">Quiénes somos</a></li>
+                        <li><a href="#">Misión</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </nav>
+        <p class="instrucciones-menu">
+            Haz clic en una opción para desplegar su menú.
+            <br>También puedes navegar con Tab y Shif + Tab para navegar
+            <br>Presiona Enter o Espacio para activar botones y Esc para cerrar los submenús.
+            <br>Para abrir un enlace, utiliza Enter.
+        </p>
+        
+        <main>
+            <section id="contenido" class="tarjeta-contenido" aria-live="polite" tabindex="-1">
+                <h2 id="titulo-contenido">Bienvenido</h2>
+                <p id="descripcion-contenido">
+                    Selecciona una opción del menú para conocer más información.
+                </p>
+                <button type="button" id="btn-inicio">Restablecer contenido</button>
+                <a href="../index.html" class="enlace-regreso">Volver al menú principal</a>
+            </section>
+        </main>
+        </p>
+    </header>
+</body>
+</html>
