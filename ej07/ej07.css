@@ -1,0 +1,208 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f5fa;
+    color: #172b4d;
+
+    background:
+        radial-gradient(circle at 15% 20%, #60a5fa80, transparent 40%),
+        radial-gradient(circle at 85% 80%, #a78bfa80, transparent 40%),
+        linear-gradient(135deg, #dbeafe, #eef2ff, #c7d2fe);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+header {
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #172b4d;
+    text-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+}
+
+.submenu {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #243447;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 170px;
+    z-index: 10;
+}
+
+.menu-principal > li {
+    position: relative;
+    color: white;
+}
+
+.submenu.activo {
+    display: block;
+}
+
+.submenu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px 15px;
+}
+
+.submenu a:hover {
+    background-color: #2563eb;
+}
+
+.menu-principal {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: #172b4d;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.menu-principal button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 12px 18px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-principal button:hover {
+    background-color: #2563eb;
+}
+
+.menu-principal button[aria-expanded="true"]{
+    background-color: #2563eb;
+}
+
+.instrucciones-menu {
+    font-size: 15px;
+    color: #475569;
+    text-align: center;
+    line-height: 1.8;
+    padding: 10px 20px;
+    margin: 15px auto 25px;
+    max-width: 750px;
+}
+
+.menu-principal button:focus-visible,
+.submenu a:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.tarjeta-contenido {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #2563eb;
+}
+
+.tarjeta-contenido h2 {
+    color: #172b4d;
+    margin-top: 0;
+}
+
+.tarjeta-contenido p {
+    color: #475569;
+    line-height: 1.6;
+}
+
+#btn-inicio {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 15px;
+    transition: 0.3s ease;
+}
+
+#btn-inicio:hover {
+    background-color: #1d4ed8;
+}
+
+#btn-inicio:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+.enlace-regreso {
+    display: inline-block;
+    background-color: #172b4d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-top: 15px;
+    margin-left: 10px;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.enlace-regreso:hover {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .menu-principal {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu-principal button {
+        width: 100%;
+        text-align: left;
+    }
+
+    .submenu {
+        position: static;
+        width: 100%;
+    }
+
+    #btn-inicio,
+    .enlace-regreso {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 12px 0 0;
+        text-align: center;
+    }
+
+    header {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}

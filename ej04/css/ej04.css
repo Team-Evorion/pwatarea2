@@ -1,0 +1,167 @@
+
+body {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.ejercicio-container {
+    text-align: center;
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+.descripcion {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+/* Esfera del Reloj */
+.reloj-analogo {
+    width: 260px;
+    height: 260px;
+    border: 6px solid #38bdf8;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto 20px auto;
+
+    background: radial-gradient(
+        circle,
+        #1e293b 0%,
+        #0f172a 75%
+    );
+
+    box-shadow:
+        0 0 20px rgba(56, 189, 248, 0.25)
+        inset 0 0 25 px rgba(0, 0, 0, 0.5);
+}
+
+.reloj-analogo::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border-radius: 50%;
+
+    background: repeating-conic-gradient(
+        from -1deg,
+        #94a3b8 0deg 2deg,
+        transparent 2deg 30deg
+    );
+
+    mask: radial-gradient(
+        circle closest-side,
+        transparent 82%,
+        black 83%
+    );
+
+    pointer-events: none;
+}
+
+/* Manecillas */
+.manecilla {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom; /* Clave para que rote desde su base central */
+    border-radius: 4px;
+}
+
+.hora {
+    width: 6px;
+    height: 55px;
+    background-color: #f8fafc;
+    margin-left: -3px;
+    z-index: 3;
+}
+
+.minuto {
+    width: 4px;
+    height: 75px;
+    background-color: #38bdf8;
+    margin-left: -2px;
+    z-index: 2;
+}
+
+.segundo {
+    width: 2px;
+    height: 85px;
+    background-color: #f43f5e;
+    margin-left: -1px;
+    z-index: 1;
+}
+
+/* Pivote central del reloj */
+.centro-reloj {
+    width: 12px;
+    height: 12px;
+    background-color: #f43f5e;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+}
+
+/* Visualización digital complementaria */
+.reloj-digital {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #38bdf8;
+
+    background-color: #0f172a;
+    padding: 12px 24px;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 8px;
+    
+    margin-bottom: 25px;
+}
+
+.btn-volver {
+    display: inline-block;
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s, transform 0.3s ease;
+}
+
+.btn-volver:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    transform: translateX(-5px);
+}
+
+@media (max-width: 480px) {
+    .ejercicio-container {
+        padding: 20px;
+    }
+
+    .reloj-analogo {
+        width: 200px;
+        height: 200px;
+    }
+
+    .descripcion {
+        font-size: 0.85rem;
+    }
+
+    .reloj-digital {
+        font-size: 1.1rem;
+    }
+}
